@@ -1,6 +1,16 @@
 *.class
+*.iml
+.idea/
+.DS_Store
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+#workspace Files
+
+target/
+.settings/
+.classpath
+.project
