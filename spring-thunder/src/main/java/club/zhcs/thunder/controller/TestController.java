@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,4 +34,9 @@ public class TestController {
 		return target;
 	}
 
+	@RequestMapping("/beetl")
+	public String beetl(Model model) {
+		model.addAttribute("obj", "Hello iBeetl!");
+		return "pages/test";
+	}
 }

@@ -39,10 +39,10 @@
 		<!-- 多视图解析器，需要设置viewNames和order -->
 		<property name="viewNames">
 			<list>
-				<value>/template/**</value>
+				<value>pages/**</value>
 			</list>
 		</property>
-		<property name="suffix" value=".btl" />
+		<property name="suffix" value=".html" />
 		<property name="contentType" value="text/html;charset=UTF-8" />
 		<property name="order" value="0" />
 		<!-- 多GroupTemplate，需要指定使用的bean -->
@@ -55,7 +55,7 @@
 		<!-- 多视图解析器，需要设置viewNames和order -->
 		<property name="viewNames">
 			<list>
-				<value>/cmstemplate/**</value>
+				<value>cms/**</value>
 			</list>
 		</property>
 		<property name="contentType" value="text/html;charset=UTF-8" />
