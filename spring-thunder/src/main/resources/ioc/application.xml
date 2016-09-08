@@ -63,6 +63,8 @@
 		<property name="suffix" value=".jsp" />
 		<property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
+	
+	<bean class="club.zhcs.thunder.listener.Setup" ></bean>
 
 
 </beans>
