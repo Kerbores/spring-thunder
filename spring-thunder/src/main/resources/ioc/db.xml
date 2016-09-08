@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:/config/datasource.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="nutDao" class="org.nutz.dao.impl.NutDao">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 如果要使用Trans,移除springDaoRunner -->
+		<property name="runner" ref="springDaoRunner" />
+	</bean>
+	<bean id="springDaoRunner" class="org.nutz.integration.spring.SpringDaoRunner">
+	</bean>
+
+	<!-- druid数据库连接池配置 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="url" value="${db.url}" />
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="username" value="${db.user}" />
+		<property name="password" value="${db.pwd}" />
+
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="${db.filters}" />
+
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="maxActive" value="${db.pool.max}" />
+		<property name="initialSize" value="${db.pool.init}" />
+		<property name="minIdle" value="${db.pool.min}" />
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${db.pool.wait}" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${db.time.betw}" />
+		<property name="minEvictableIdleTimeMillis" value="${db.time.met}" />
+
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="validationQuery" value="${db.query.val}" />
+		<property name="testWhileIdle" value="${db.test.idle}" />
+		<property name="testOnBorrow" value="${db.test.borr}" />
+		<property name="testOnReturn" value="${db.test.return}" />
+
+		<property name="connectionProperties" value="${connectionProperties}" />
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements">
+			<value>true</value>
+		</property>
+		<property name="maxOpenPreparedStatements">
+			<value>20</value>
+		</property>
+	</bean>
+
+	<!-- 声明事务,自动管理配置数据源 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!-- 用注解来实现事务管理 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>

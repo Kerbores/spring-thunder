@@ -3,6 +3,9 @@ package club.zhcs.thunder.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.nutz.dao.Dao;
+import org.nutz.lang.util.NutMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("test")
 public class TestController {
 
+	@Autowired
+	Dao dao;
+
 	@RequestMapping("/json")
 	public @ResponseBody Map<String, Object> json() {
 
@@ -38,5 +44,10 @@ public class TestController {
 	public String beetl(Model model) {
 		model.addAttribute("obj", "Hello iBeetl!");
 		return "pages/test";
+	}
+
+	@RequestMapping("/db")
+	public @ResponseBody NutMap db() {
+		return NutMap.NEW().addv("db", dao.meta());
 	}
 }

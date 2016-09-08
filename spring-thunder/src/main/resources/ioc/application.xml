@@ -15,6 +15,7 @@
 	<!-- if you use annotation you must configure following setting -->
 	<mvc:annotation-driven />
 
+<import resource="classpath*:/ioc/db.xml" />
 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
@@ -29,9 +30,9 @@
 	</bean>
 
 
-	<bean name="cmsbeetlConfig" class="org.beetl.ext.spring.BeetlGroupUtilConfiguration" init-method="init">
+	<!-- bean name="cmsbeetlConfig" class="org.beetl.ext.spring.BeetlGroupUtilConfiguration" init-method="init">
 		<property name="configFileResource" value="classpath:cms-beetl.properties" />
-	</bean>
+	</bean -->
 
 
 	<!-- Beetl视图解析器1 -->
@@ -51,8 +52,7 @@
 	</bean>
 
 	<!-- Beetl视图解析器2 -->
-	<bean name="cmsBeetlViewResolver" class="org.beetl.ext.spring.BeetlSpringViewResolver">
-		<!-- 多视图解析器，需要设置viewNames和order -->
+	<!-- bean name="cmsBeetlViewResolver" class="org.beetl.ext.spring.BeetlSpringViewResolver">
 		<property name="viewNames">
 			<list>
 				<value>cms/**</value>
@@ -60,10 +60,9 @@
 		</property>
 		<property name="contentType" value="text/html;charset=UTF-8" />
 		<property name="order" value="1" />
-		<!-- 多GroupTemplate，需要指定使用的bean -->
 		<property name="config" ref="cmsbeetlConfig" />
 
-	</bean>
+	</bean -->
 
 	<!-- JSP视图解析器 -->
 	<bean name="JSPViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
