@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.nutz.dao.Dao;
+import org.nutz.dao.Sqls;
+import org.nutz.dao.sql.Sql;
 import org.nutz.lang.util.NutMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,5 +51,13 @@ public class TestController {
 	@RequestMapping("/db")
 	public @ResponseBody NutMap db() {
 		return NutMap.NEW().addv("db", dao.meta());
+	}
+
+	@RequestMapping("/sql")
+	public @ResponseBody int sql() {
+		Sql sql = dao.sqls().create("test");
+		sql.setCallback(Sqls.callback.integer());
+		dao.execute(sql);
+		return sql.getInt();
 	}
 }

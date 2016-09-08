@@ -3,7 +3,9 @@
 	id="WebApp_ID" version="2.5">
 	<display-name>spring-thunder</display-name>
 
-
+	<listener>
+		<listener-class>club.zhcs.thunder.listener.NutzContenxtInitListener</listener-class>
+	</listener>
 	<servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

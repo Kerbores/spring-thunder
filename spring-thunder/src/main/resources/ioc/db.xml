@@ -13,10 +13,19 @@
 		</property>
 	</bean>
 
+	<bean id="sqlManeger" class="org.nutz.dao.impl.FileSqlManager">
+		<constructor-arg name="paths">
+			<list>
+				<value>sql</value>
+			</list>
+		</constructor-arg>
+	</bean>
+
 	<bean id="nutDao" class="org.nutz.dao.impl.NutDao">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 如果要使用Trans,移除springDaoRunner -->
 		<property name="runner" ref="springDaoRunner" />
+		<property name="sqlManager" ref="sqlManeger" />
 	</bean>
 	<bean id="springDaoRunner" class="org.nutz.integration.spring.SpringDaoRunner">
 	</bean>
