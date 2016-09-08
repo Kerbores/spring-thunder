@@ -2,9 +2,16 @@ package club.zhcs.thunder.utils;
 
 /**
  * 
- * @author Ixion
+ * @author Kerbores(kerbores@gmail.com)
  *
- *         操作状态枚举 create at 2014年8月22日
+ * @project spring-thunder
+ *
+ * @file OperationState.java
+ *
+ * @description 操作状态枚举
+ *
+ * @time 2016年9月8日 上午11:24:53
+ *
  */
 public enum OperationState {
 	/**

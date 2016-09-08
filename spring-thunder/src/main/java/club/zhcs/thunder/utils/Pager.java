@@ -10,9 +10,17 @@ import org.nutz.json.Json;
 import org.nutz.lang.util.NutMap;
 
 /**
- * @author 王贵源
+ * 
+ * @author Kerbores(kerbores@gmail.com)
  *
- *         create at 2014年9月30日 上午11:21:12
+ * @project spring-thunder
+ *
+ * @file Pager.java
+ *
+ * @description 分页
+ *
+ * @time 2016年9月8日 上午11:25:11
+ *
  */
 public class Pager<T> {
 

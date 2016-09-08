@@ -13,9 +13,16 @@ import org.nutz.lang.util.NutMap;
  * data为携带的数据,用map来保存key-value形式的各种数据便于根据key进行获取<br>
  * title特为jsp页面设置,用来表示jsp页面的标题信息
  * 
- * @author Ixion
+ * @author Kerbores(kerbores@gmail.com)
  *
- *         create at 2014年8月22日
+ * @project spring-thunder
+ *
+ * @file Result.java
+ *
+ * @description 响应数据封装
+ *
+ * @time 2016年9月8日 上午11:25:31
+ *
  */
 public class Result {
 
@@ -232,6 +239,6 @@ public class Result {
 	 */
 	@Override
 	public String toString() {
-		return Json.toJson(this,JsonFormat.forLook());
+		return Json.toJson(this, JsonFormat.forLook());
 	}
 }

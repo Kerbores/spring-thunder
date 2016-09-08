@@ -15,7 +15,7 @@ import org.nutz.resource.Scans;
  *
  * @file NutzContenxtInitListener.java
  *
- * @description NutzContenxtInitListener.java
+ * @description  项目启动的时候做点儿事情,在ioc初始化之前
  *
  * @time 2016年9月8日 上午10:22:30
  *
