@@ -1,6 +1,7 @@
 package club.zhcs.thunder.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.nutz.dao.Dao;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import club.zhcs.thunder.biz.UserService;
+import club.zhcs.thunder.domain.User;
 
 /**
  * @author Kerbores(kerbores@gmail.com)
@@ -31,6 +35,14 @@ public class TestController {
 
 	@Autowired
 	Dao dao;
+
+	@Autowired
+	UserService userService;
+
+	@RequestMapping("/users")
+	public @ResponseBody List<User> users() {
+		return userService.queryAll();
+	}
 
 	@RequestMapping("/json")
 	public @ResponseBody Map<String, Object> json() {
