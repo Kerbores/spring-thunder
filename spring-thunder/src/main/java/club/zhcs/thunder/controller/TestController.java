@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.nutz.dao.Dao;
 import org.nutz.dao.Sqls;
+import org.nutz.dao.entity.Record;
 import org.nutz.dao.sql.Sql;
 import org.nutz.lang.util.NutMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,10 +67,11 @@ public class TestController {
 	}
 
 	@RequestMapping("/sql")
-	public @ResponseBody int sql() {
+	public @ResponseBody List<Record> sql() {
 		Sql sql = dao.sqls().create("test");
-		sql.setCallback(Sqls.callback.integer());
+		sql.vars().set("id", 1);
+		sql.setCallback(Sqls.callback.records());
 		dao.execute(sql);
-		return sql.getInt();
+		return sql.getList(Record.class);
 	}
 }
