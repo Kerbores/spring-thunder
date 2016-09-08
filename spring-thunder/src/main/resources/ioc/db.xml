@@ -9,6 +9,7 @@
 		<property name="locations">
 			<list>
 				<value>classpath*:/config/datasource.properties</value>
+				<value>/var/config/datasource.properties</value><!-- 配置多个即可环境感知 -->
 			</list>
 		</property>
 	</bean>

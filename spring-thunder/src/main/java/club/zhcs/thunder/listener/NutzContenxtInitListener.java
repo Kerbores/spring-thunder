@@ -3,6 +3,9 @@ package club.zhcs.thunder.listener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.log4j.PropertyConfigurator;
+import org.nutz.ioc.impl.PropertiesProxy;
+import org.nutz.lang.Files;
 import org.nutz.resource.Scans;
 
 /**
@@ -28,7 +31,12 @@ public class NutzContenxtInitListener implements ServletContextListener {
 	 */
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		Scans.me().init(event.getServletContext());
+		Scans.me().init(event.getServletContext());// 初始化nutz的Scans
+
+		if (Files.checkFile("/var/config/log/log4j.properties") != null) {// 找到了线上配置
+			PropertyConfigurator.configure(new PropertiesProxy("/var/config/log/log4j.properties").toProperties());//那么加载线上的配置吧!!!
+		}
+
 	}
 
 	/*
