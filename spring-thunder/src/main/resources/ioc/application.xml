@@ -64,7 +64,7 @@
 		<property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
 	
-	<bean class="club.zhcs.thunder.listener.Setup" ></bean>
+	<bean class="club.zhcs.thunder.listener.ApplicationInitRunner" ></bean>
 
 
 </beans>

@@ -32,9 +32,10 @@ public class NutzContenxtInitListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		Scans.me().init(event.getServletContext());// 初始化nutz的Scans
+		String logConfigPath = "/var/config/log4j.properties"; //XXX 修改这里日志就修改了哦
 		try {
-			if (Files.checkFile("/var/config/log4j.properties") != null) {// 找到了线上配置
-				PropertyConfigurator.configure(new PropertiesProxy("/var/config/log4j.properties").toProperties());// 那么加载线上的配置吧!!!
+			if (Files.checkFile(logConfigPath) != null) {// 找到了线上配置
+				PropertyConfigurator.configure(new PropertiesProxy(logConfigPath).toProperties());// 那么加载线上的配置吧!!!
 			}
 		} catch (Exception e) {
 		}

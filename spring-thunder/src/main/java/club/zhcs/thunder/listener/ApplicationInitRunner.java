@@ -18,7 +18,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
  * @time 2016年9月8日 下午12:31:36
  *
  */
-public class Setup implements ApplicationListener<ContextRefreshedEvent> {
+public class ApplicationInitRunner implements ApplicationListener<ContextRefreshedEvent> {
 
 	/*
 	 * (non-Javadoc)
@@ -33,6 +33,7 @@ public class Setup implements ApplicationListener<ContextRefreshedEvent> {
 		if (context.getParent() == null) {//保险一点儿
 			Dao dao = context.getBean(Dao.class);
 			Daos.createTablesInPackage(dao, "zlub.zhcs", false);// 初始化一下
+			//TODO 这里可以处理一些初始化的事情
 		}
 	}
 
