@@ -16,11 +16,11 @@ public class ThunderExceptionHandler  implements HandlerExceptionResolver{
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object o, Exception e) {
         String requestType = request.getHeader("X-Requested-With");
-        if (Strings.isBlank(requestType))
+        if (Strings.isBlank(requestType) && Strings.isBlank(request.getHeader("app-client")))
         return null;
 
         ModelAndView mav = new ModelAndView();
-        MappingJackson2JsonView view = new MappingJackson2JsonView();
+        GsonJsonView view = new GsonJsonView();
         view.setAttributesMap(NutMap.NEW().addv("error",e.getMessage()));
         mav.setView(view);
         return mav;
