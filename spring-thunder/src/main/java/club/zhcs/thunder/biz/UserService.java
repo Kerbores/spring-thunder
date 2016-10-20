@@ -1,8 +1,9 @@
 package club.zhcs.thunder.biz;
 
+import org.springframework.stereotype.Service;
+
 import club.zhcs.thunder.biz.base.BaseService;
 import club.zhcs.thunder.domain.User;
-import org.springframework.stereotype.Service;
 
 /**
  * @author Kerbores(kerbores@gmail.com)
@@ -13,5 +14,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserService extends BaseService<User> {
-
 }
