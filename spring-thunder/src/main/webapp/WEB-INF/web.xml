@@ -21,7 +21,7 @@
 
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
@@ -34,10 +34,10 @@
     </welcome-file-list>
     <error-page>
         <error-code>404</error-code>
-        <location>/404</location>
+        <location>/404.jsp</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/500</location>
+        <location>/500.jsp</location>
     </error-page>
 </web-app>

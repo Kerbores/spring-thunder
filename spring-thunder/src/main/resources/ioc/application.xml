@@ -50,15 +50,12 @@
 
 	</bean>
 
-	<!-- Beetl视图解析器2 -->
-	<!-- bean name="cmsBeetlViewResolver" class="org.beetl.ext.spring.BeetlSpringViewResolver"> <property name="viewNames"> <list> <value>cms/**</value> </list> </property> <property name="contentType" 
-		value="text/html;charset=UTF-8" /> <property name="order" value="1" /> <property name="config" ref="cmsbeetlConfig" /> </bean -->
 
 	<!-- JSP视图解析器 -->
 	<bean name="JSPViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 注意JSP的这个视图解析器order必须在最后 -->
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
 		<property name="order" value="256" />
-		<!-- beetl配置不支持前缀，这不同于jsp 和 freemaker -->
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
 		<property name="contentType" value="text/html;charset=UTF-8" />
