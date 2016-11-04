@@ -8,7 +8,9 @@
 	<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.Md5CredentialsMatcher"></bean>
 
 	<!-- 缓存管理 -->
-	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"></bean>
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>  
+	</bean>
 
 	<bean id="thunderRealm" class="club.zhcs.thunder.ext.shiro.ThunderRealm">
 		<property name="credentialsMatcher" ref="credentialsMatcher"></property>
@@ -33,7 +35,7 @@
 
 	<!-- 开启Shiro的注解(如@RequiresRoles，@RequiresPermissions)，需借助SpringAOP扫描使用Shiro注解的类， 并在必要时进行安全逻辑验证 -->
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>
-	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+	<bean class="club.zhcs.thunder.ext.shiro.ThunderAdvisor">
 		<property name="securityManager" ref="securityManager"></property>
 	</bean>
 </beans>

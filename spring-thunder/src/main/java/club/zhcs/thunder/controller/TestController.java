@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.shiro.authz.annotation.RequiresUser;
 import org.nutz.dao.Dao;
 import org.nutz.dao.Sqls;
 import org.nutz.dao.entity.Record;
@@ -20,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.common.collect.Lists;
 
 import club.zhcs.thunder.biz.acl.UserService;
+import club.zhcs.thunder.domain.InstalledRole;
 import club.zhcs.thunder.domain.acl.User;
+import club.zhcs.thunder.ext.shiro.anno.ThunderRequiresRoles;
 
 /**
  * @author Kerbores(kerbores@gmail.com)
@@ -79,8 +80,8 @@ public class TestController {
 		return NutMap.NEW().addv("db", dao.meta());
 	}
 
-	@RequiresUser
 	@RequestMapping("/shiro")
+	@ThunderRequiresRoles(InstalledRole.SU)
 	public @ResponseBody NutMap shiro() {
 		return NutMap.NEW().addv("msg", "shiro");
 	}
