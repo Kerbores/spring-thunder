@@ -234,7 +234,7 @@ public class APMTask {
 
 	public String hostIp = Ips.hostIp();
 
-	@Scheduled(cron = "*/30 * * * * ? ")
+	@Scheduled(cron = "*/2 * * * * ? ")
 	public void execute() {
 		LOG.debug("sigar...");
 		try {

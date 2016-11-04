@@ -12,18 +12,22 @@ import org.apache.log4j.Logger;
 import org.nutz.lang.Lang;
 import org.nutz.lang.Strings;
 import org.nutz.lang.util.NutMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import club.zhcs.thunder.Thunder.SessionKeys;
 import club.zhcs.thunder.controller.base.BaseController;
 import club.zhcs.thunder.domain.acl.User;
+import club.zhcs.thunder.tasks.APMTask;
 import club.zhcs.titans.nutz.captcha.ImageVerification;
 import club.zhcs.titans.nutz.captcha.JPEGView;
 import club.zhcs.titans.utils.codec.DES;
+import club.zhcs.titans.utils.db.Result;
 
 /**
  * @author admin
@@ -36,6 +40,9 @@ import club.zhcs.titans.utils.codec.DES;
 public class HomeController extends BaseController {
 
 	private static final Logger log = Logger.getLogger(HomeController.class);
+
+	@Autowired
+	APMTask apmTask;
 
 	@RequestMapping("/")
 	public String home(HttpServletRequest request, Model model, @SessionAttribute(name = SessionKeys.USER_KEY, required = false) User user) {
@@ -77,6 +84,11 @@ public class HomeController extends BaseController {
 		// 以下关闭输入流！
 		out.flush();
 		out.close();
+	}
+
+	@RequestMapping("dashboard")
+	public @ResponseBody Result dashboard() {
+		return apmTask.data();
 	}
 
 }
