@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns="http://www.springframework.org/schema/beans"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 	<context:component-scan base-package="club.zhcs" />
 	<mvc:default-servlet-handler />
 	<mvc:annotation-driven />
+	<task:annotation-driven scheduler="myScheduler" />
+	<task:scheduler id="myScheduler" pool-size="20" />
 
 	<import resource="classpath*:/ioc/db.xml" />
 	<import resource="classpath*:/ioc/shiro.xml" />
@@ -52,17 +55,17 @@
 
 	<bean class="club.zhcs.thunder.listener.ApplicationInitRunner" />
 	<bean class="club.zhcs.thunder.handler.ThunderExceptionHandler" />
-	
-	<!-- PropertiesProxy 配置加载  -->
+
+	<!-- PropertiesProxy 配置加载 -->
 	<bean class="org.nutz.ioc.impl.PropertiesProxy">
 		<constructor-arg type="boolean" value="false" />
-        <property name="ignoreResourceNotFound" value="true"/>
-        <property name="paths">
-            <list>
-                <value>config</value><!-- 开发环境配置目錄 -->
-                <value>/var/config/</value><!-- 生产环境配置目錄 -->
-            </list>
-        </property>
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="paths">
+			<list>
+				<value>config</value><!-- 开发环境配置目錄 -->
+				<value>/var/config/</value><!-- 生产环境配置目錄 -->
+			</list>
+		</property>
 	</bean>
 
 
