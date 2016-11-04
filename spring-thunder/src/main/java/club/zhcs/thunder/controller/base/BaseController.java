@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.nutz.lang.Lang;
@@ -14,9 +13,8 @@ import org.nutz.mvc.view.ForwardView;
 import org.nutz.mvc.view.JspView;
 import org.nutz.mvc.view.ServerRedirectView;
 import org.nutz.mvc.view.UTF8JsonView;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
+import club.zhcs.thunder.ext.spring.SpringBeans;
 import eu.bitwalker.useragentutils.UserAgent;
 
 /**
@@ -29,29 +27,19 @@ public class BaseController {
 
 	Logger logger = Logger.getLogger(getClass());
 
-	public HttpServletRequest getRequest() {
-		ServletRequestAttributes ra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-		return ra.getRequest();
-	}
-
-	public HttpServletResponse getrResponse() {
-		ServletRequestAttributes ra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-		return ra.getResponse();
-	}
-
 	protected void _addCookie(String name, String value, int age) {
 		Cookie cookie = new Cookie(name, value);
 		cookie.setPath("/");
 		cookie.setMaxAge(age);
-		getrResponse().addCookie(cookie);
+		SpringBeans.getrResponse().addCookie(cookie);
 	}
 
 	public String _base() {
-		return getRequest().getContextPath();
+		return SpringBeans.getRequest().getContextPath();
 	}
 
 	public UserAgent _ua() {
-		return new UserAgent(getRequest().getHeader("user-agent"));
+		return new UserAgent(SpringBeans.getRequest().getHeader("user-agent"));
 	}
 
 	public int _fixPage(int page) {
@@ -59,7 +47,7 @@ public class BaseController {
 	}
 
 	public String _fixSearchKey(String key) {
-		HttpServletRequest request = getRequest();
+		HttpServletRequest request = SpringBeans.getRequest();
 		if ((Strings.equalsIgnoreCase("get", request.getMethod())) && (Lang.isWin())) {
 			key = (Strings.isBlank(key)) ? "" : key;
 			try {
@@ -73,7 +61,7 @@ public class BaseController {
 	}
 
 	protected String _getCookie(String name) {
-		Cookie[] cookies = getRequest().getCookies();
+		Cookie[] cookies = SpringBeans.getRequest().getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (Strings.equals(cookie.getName(), name)) {
@@ -89,15 +77,15 @@ public class BaseController {
 	}
 
 	public String _ip() {
-		return Lang.getIP(getRequest());
+		return Lang.getIP(SpringBeans.getRequest());
 	}
 
 	protected void _putSession(String key, Object value) {
-		getRequest().getSession().setAttribute(key, value);
+		SpringBeans.getRequest().getSession().setAttribute(key, value);
 	}
 
 	public View _renderForward(String path, Object[] objs) {
-		getRequest().setAttribute("objs", objs);
+		SpringBeans.getRequest().setAttribute("objs", objs);
 		return new ForwardView(path);
 	}
 
@@ -108,7 +96,7 @@ public class BaseController {
 	}
 
 	public View _renderJsp(String path, Object[] objs) {
-		getRequest().setAttribute("objs", objs);
+		SpringBeans.getRequest().setAttribute("objs", objs);
 		return new JspView(path);
 	}
 

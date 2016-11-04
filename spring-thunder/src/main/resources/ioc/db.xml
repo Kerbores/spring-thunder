@@ -11,7 +11,7 @@
         <property name="ignoreResourceNotFound" value="true"/>
         <property name="locations">
             <list>
-                <value>classpath*:/config/datasource.properties</value><!-- 开发环境数据源 -->
+                <value>classpath*:/db/datasource.properties</value><!-- 开发环境数据源 -->
                 <value>file:/var/config/datasource.properties</value><!-- 生产环境数据源 -->
             </list>
         </property>

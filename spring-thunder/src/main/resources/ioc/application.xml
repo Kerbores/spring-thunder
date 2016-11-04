@@ -63,6 +63,17 @@
 
 	<bean class="club.zhcs.thunder.listener.ApplicationInitRunner" />
 	<bean class="club.zhcs.thunder.handler.ThunderExceptionHandler" />
+	
+	<bean class="org.nutz.ioc.impl.PropertiesProxy">
+		<constructor-arg type="boolean" value="false" />
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="paths">
+            <list>
+                <value>config</value><!-- 开发环境配置目錄 -->
+                <value>/var/config/</value><!-- 生产环境配置目錄 -->
+            </list>
+        </property>
+	</bean>
 
 
 </beans>

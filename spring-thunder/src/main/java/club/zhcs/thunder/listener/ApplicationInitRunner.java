@@ -26,6 +26,7 @@ import club.zhcs.thunder.domain.acl.RolePermission;
 import club.zhcs.thunder.domain.acl.User;
 import club.zhcs.thunder.domain.acl.User.Status;
 import club.zhcs.thunder.domain.acl.UserRole;
+import club.zhcs.thunder.ext.spring.SpringBeans;
 
 /**
  * @author Kerbores(kerbores@gmail.com)
@@ -50,6 +51,7 @@ public class ApplicationInitRunner implements ApplicationListener<ContextRefresh
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		ApplicationContext context = event.getApplicationContext();
+		SpringBeans.applicationContext = context;
 		if (context.getParent() == null) {// 保险一点儿
 			Dao dao = context.getBean(Dao.class);
 			Daos.createTablesInPackage(dao, "club.zhcs", false);// 初始化一下
