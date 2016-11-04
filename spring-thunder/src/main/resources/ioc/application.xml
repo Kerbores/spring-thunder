@@ -13,6 +13,7 @@
 
 	<import resource="classpath*:/ioc/db.xml" />
 	<import resource="classpath*:/ioc/shiro.xml" />
+	<import resource="classpath*:/ioc/email.xml" />
 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
@@ -57,7 +58,7 @@
 	<bean class="club.zhcs.thunder.handler.ThunderExceptionHandler" />
 
 	<!-- PropertiesProxy 配置加载 -->
-	<bean class="org.nutz.ioc.impl.PropertiesProxy">
+	<bean id="config" class="org.nutz.ioc.impl.PropertiesProxy">
 		<constructor-arg type="boolean" value="false" />
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="paths">
