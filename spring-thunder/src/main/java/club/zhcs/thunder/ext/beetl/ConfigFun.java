@@ -4,7 +4,6 @@ import org.beetl.core.Context;
 import org.beetl.core.Function;
 import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.lang.Strings;
-import org.nutz.mvc.Mvcs;
 
 import club.zhcs.thunder.ext.spring.SpringBeans;
 
@@ -31,8 +30,8 @@ public class ConfigFun implements Function {
 		}
 		switch (paras[0].toString()) {
 		case "debug":
-			return Strings.equalsIgnoreCase("localhost", Mvcs.getReq().getServerName()) || Strings.equalsIgnoreCase("127.0.0.1", Mvcs.getReq().getServerName())
-					|| config.getBoolean("debug");
+			return Strings.equalsIgnoreCase("localhost", SpringBeans.getRequest().getServerName())
+					|| Strings.equalsIgnoreCase("127.0.0.1", SpringBeans.getRequest().getServerName()) || config.getBoolean("debug");
 		default:
 			return config.get(paras[0].toString());
 		}
