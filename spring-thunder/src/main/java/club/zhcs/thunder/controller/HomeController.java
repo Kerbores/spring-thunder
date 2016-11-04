@@ -16,9 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import club.zhcs.thunder.Thunder.SessionKeys;
 import club.zhcs.thunder.controller.base.BaseController;
+import club.zhcs.thunder.domain.acl.User;
 import club.zhcs.titans.nutz.captcha.ImageVerification;
 import club.zhcs.titans.utils.codec.DES;
 
@@ -36,8 +38,7 @@ public class HomeController extends BaseController {
 	private static final Logger log = Logger.getLogger(HomeController.class);
 
 	@RequestMapping("/")
-	public String home(HttpServletRequest request, Model model) {
-		Object user = request.getSession().getAttribute(SessionKeys.USER_KEY);
+	public String home(HttpServletRequest request, Model model, @SessionAttribute(SessionKeys.USER_KEY) User user) {
 		if (user != null) {
 			return "redirect:/system/main";
 		}
