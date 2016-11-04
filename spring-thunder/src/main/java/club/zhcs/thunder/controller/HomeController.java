@@ -38,7 +38,7 @@ public class HomeController extends BaseController {
 	private static final Logger log = Logger.getLogger(HomeController.class);
 
 	@RequestMapping("/")
-	public String home(HttpServletRequest request, Model model, @SessionAttribute(SessionKeys.USER_KEY) User user) {
+	public String home(HttpServletRequest request, Model model, @SessionAttribute(name = SessionKeys.USER_KEY, required = false) User user) {
 		if (user != null) {
 			return "redirect:/system/main";
 		}
