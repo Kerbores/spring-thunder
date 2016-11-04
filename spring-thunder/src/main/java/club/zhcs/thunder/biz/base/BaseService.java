@@ -30,10 +30,12 @@ import club.zhcs.titans.utils.db.Pager;
 import club.zhcs.titans.utils.db.po.Entity;
 
 /**
- * @author Kerbores(kerbores@gmail.com)
- * @copyRight CopyRight © 2016 Kerbores.com
- * @description 扩展体系内的实体基础服务
- * @time 2016年3月14日 下午9:22:16
+ * 
+ * @author admin
+ *
+ * @email kerbores@gmail.com
+ *
+ * @param <T>
  */
 @Service
 public class BaseService<T extends Entity> extends IdNameEntityService<T> {

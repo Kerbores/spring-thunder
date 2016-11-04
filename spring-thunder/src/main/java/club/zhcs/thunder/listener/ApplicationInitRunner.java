@@ -29,11 +29,11 @@ import club.zhcs.thunder.domain.acl.UserRole;
 import club.zhcs.thunder.ext.spring.SpringBeans;
 
 /**
- * @author Kerbores(kerbores@gmail.com)
- * @project spring-thunder
- * @file Setup.java
- * @description 系统初始化
- * @time 2016年9月8日 下午12:31:36
+ * 
+ * @author admin
+ *
+ * @email kerbores@gmail.com
+ *
  */
 public class ApplicationInitRunner implements ApplicationListener<ContextRefreshedEvent> {
 

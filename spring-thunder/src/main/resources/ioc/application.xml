@@ -4,18 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
-
-
-	<!-- scan the package and the sub package -->
 	<context:component-scan base-package="club.zhcs" />
-
-	<!-- don't handle the static resource -->
 	<mvc:default-servlet-handler />
-
-	<!-- if you use annotation you must configure following setting -->
 	<mvc:annotation-driven />
 
 	<import resource="classpath*:/ioc/db.xml" />
+	<import resource="classpath*:/ioc/shiro.xml" />
 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
@@ -28,11 +22,6 @@
 	<bean name="beetlConfig" class="org.beetl.ext.spring.BeetlGroupUtilConfiguration" init-method="init">
 		<property name="configFileResource" value="classpath:beetl.properties" />
 	</bean>
-
-
-	<!-- bean name="cmsbeetlConfig" class="org.beetl.ext.spring.BeetlGroupUtilConfiguration" init-method="init"> <property name="configFileResource" value="classpath:cms-beetl.properties" 
-		/> </bean -->
-
 
 	<!-- Beetl视图解析器1 -->
 	<bean name="beetlViewResolver" class="org.beetl.ext.spring.BeetlSpringViewResolver">
@@ -64,6 +53,7 @@
 	<bean class="club.zhcs.thunder.listener.ApplicationInitRunner" />
 	<bean class="club.zhcs.thunder.handler.ThunderExceptionHandler" />
 	
+	<!-- PropertiesProxy 配置加载  -->
 	<bean class="org.nutz.ioc.impl.PropertiesProxy">
 		<constructor-arg type="boolean" value="false" />
         <property name="ignoreResourceNotFound" value="true"/>

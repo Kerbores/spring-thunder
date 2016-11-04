@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.nutz.dao.Dao;
 import org.nutz.dao.Sqls;
 import org.nutz.dao.entity.Record;
@@ -76,6 +77,12 @@ public class TestController {
 	@RequestMapping("/db")
 	public @ResponseBody NutMap db() {
 		return NutMap.NEW().addv("db", dao.meta());
+	}
+
+	@RequiresUser
+	@RequestMapping("/shiro")
+	public @ResponseBody NutMap shiro() {
+		return NutMap.NEW().addv("msg", "shiro");
 	}
 
 	@RequestMapping("/sql")
