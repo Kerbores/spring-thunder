@@ -14,7 +14,6 @@ import org.nutz.lang.LoopException;
 import org.nutz.lang.Strings;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
-import org.nutz.mvc.Mvcs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +25,7 @@ import club.zhcs.thunder.domain.acl.Role;
 import club.zhcs.thunder.domain.acl.User;
 import club.zhcs.thunder.domain.acl.User.Type;
 import club.zhcs.thunder.domain.log.LoginLog;
+import club.zhcs.thunder.ext.spring.SpringBeans;
 import club.zhcs.titans.utils.db.Result;
 
 /**
@@ -253,7 +253,7 @@ public class ShiroUserService {
 			LoginLog log = new LoginLog();
 			log.setAccount(userName);
 			log.setUserId(user.getId());
-			log.setIp(Lang.getIP(Mvcs.getReq()));
+			log.setIp(Lang.getIP(SpringBeans.getRequest()));
 			loginLogService.save(log);
 			return Result.success().addData("loginUser", user);
 		} catch (LockedAccountException e) {

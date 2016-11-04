@@ -22,6 +22,7 @@ import club.zhcs.thunder.Thunder.SessionKeys;
 import club.zhcs.thunder.controller.base.BaseController;
 import club.zhcs.thunder.domain.acl.User;
 import club.zhcs.titans.nutz.captcha.ImageVerification;
+import club.zhcs.titans.nutz.captcha.JPEGView;
 import club.zhcs.titans.utils.codec.DES;
 
 /**
@@ -34,7 +35,6 @@ import club.zhcs.titans.utils.codec.DES;
 @RequestMapping("/*")
 public class HomeController extends BaseController {
 
-	public static final String CAPTCHA = "KERBORES_NUTZ_CAPTCHA";
 	private static final Logger log = Logger.getLogger(HomeController.class);
 
 	@RequestMapping("/")
@@ -72,7 +72,7 @@ public class HomeController extends BaseController {
 			log.debug("写入输出流失败:" + iv.getVerifyCode() + ".");
 		}
 
-		session.setAttribute(CAPTCHA, iv.getVerifyCode());
+		session.setAttribute(JPEGView.CAPTCHA, iv.getVerifyCode());
 
 		// 以下关闭输入流！
 		out.flush();

@@ -15,7 +15,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.nutz.lang.Lang;
-import org.nutz.mvc.Mvcs;
 
 import club.zhcs.thunder.biz.acl.ShiroUserService;
 import club.zhcs.thunder.domain.acl.User;
@@ -33,7 +32,7 @@ public class ThunderRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		HttpSession session = Mvcs.getReq().getSession();
+		HttpSession session = SpringBeans.getRequest().getSession();
 		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 		String userName = upToken.getUsername();
 		User user = getUserService().findByName(userName);
@@ -53,7 +52,7 @@ public class ThunderRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-		HttpSession session = Mvcs.getReq().getSession();
+		HttpSession session = SpringBeans.getRequest().getSession();
 		String userName = principalCollection.getPrimaryPrincipal().toString();
 		User user = getUserService().findByName(userName);
 		if (user == null)// 用户不存在
