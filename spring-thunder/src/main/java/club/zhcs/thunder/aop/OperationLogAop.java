@@ -14,6 +14,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.nutz.castor.Castors;
 import org.nutz.json.Json;
 import org.nutz.json.JsonFormat;
@@ -114,8 +115,9 @@ public class OperationLogAop {
 	 * @return
 	 */
 	private Object getMethodReturnObject(ProceedingJoinPoint point, Object obj) {
+		MethodSignature signature = (MethodSignature) point.getSignature();
 		// 如果是 ajax 请求,返回方法的返回值
-		if (point.getSignature().getDeclaringType().getAnnotation(ResponseBody.class) != null) {
+		if (signature.getMethod().getAnnotation(ResponseBody.class) != null) {
 			return obj;
 		}
 		// 如果不是获取 Model 中的属性
@@ -125,7 +127,7 @@ public class OperationLogAop {
 				return m.asMap();
 			}
 		}
-		return null;// void 方法返回空
+		return null;// 其他情况
 	}
 
 	/**
