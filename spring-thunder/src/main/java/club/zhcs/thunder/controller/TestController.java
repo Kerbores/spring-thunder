@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
 
+import club.zhcs.thunder.aop.SystemLog;
 import club.zhcs.thunder.biz.acl.UserService;
+import club.zhcs.thunder.controller.base.BaseController;
 import club.zhcs.thunder.domain.InstalledRole;
 import club.zhcs.thunder.domain.acl.User;
 import club.zhcs.thunder.ext.shiro.anno.ThunderRequiresRoles;
@@ -31,8 +33,8 @@ import club.zhcs.thunder.ext.shiro.anno.ThunderRequiresRoles;
  * @time 2016年9月7日 下午11:50:43
  */
 @Controller
-@RequestMapping("test")
-public class TestController {
+@RequestMapping("/test/*")
+public class TestController extends BaseController {
 
 	@Autowired
 	Dao dao;
@@ -76,6 +78,7 @@ public class TestController {
 	}
 
 	@RequestMapping("/db")
+	@SystemLog(module = "测试", methods = "db")
 	public @ResponseBody NutMap db() {
 		return NutMap.NEW().addv("db", dao.meta());
 	}

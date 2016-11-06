@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import club.zhcs.thunder.Thunder.SessionKeys;
+import club.zhcs.thunder.aop.SystemLog;
 import club.zhcs.thunder.controller.base.BaseController;
 import club.zhcs.thunder.domain.acl.User;
 import club.zhcs.thunder.tasks.APMTask;
@@ -36,7 +36,6 @@ import club.zhcs.titans.utils.db.Result;
  *
  */
 @Controller
-@RequestMapping("/*")
 public class HomeController extends BaseController {
 
 	private static final Logger log = Logger.getLogger(HomeController.class);
@@ -45,7 +44,8 @@ public class HomeController extends BaseController {
 	APMTask apmTask;
 
 	@RequestMapping("/")
-	public String home(HttpServletRequest request, Model model, @SessionAttribute(name = SessionKeys.USER_KEY, required = false) User user) {
+	@SystemLog(module = "首页", methods = "test")
+	public String home(Model model, @SessionAttribute(name = SessionKeys.USER_KEY, required = false) User user) {
 		if (user != null) {
 			return "redirect:/system/main";
 		}
@@ -54,7 +54,7 @@ public class HomeController extends BaseController {
 		if (!Strings.isBlank(cookie)) {
 			data = Lang.map(DES.decrypt(cookie));
 		}
-		request.setAttribute("loginInfo", data);
+		model.addAttribute("loginInfo", data);
 		return "pages/login/login";
 	}
 

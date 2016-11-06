@@ -9,6 +9,7 @@ import org.hyperic.sigar.SigarException;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.ioc.impl.PropertiesProxy;
+import org.nutz.json.Json;
 import org.nutz.lang.ContinueLoop;
 import org.nutz.lang.Each;
 import org.nutz.lang.ExitLoop;
@@ -360,6 +361,6 @@ public class APMTask {
 	 */
 	@Async
 	protected void sendAlarmByWechat(APMAlarm alarm) {
-		throw Lang.noImplement();
+		System.err.println(Json.toJson(alarm));
 	}
 }
