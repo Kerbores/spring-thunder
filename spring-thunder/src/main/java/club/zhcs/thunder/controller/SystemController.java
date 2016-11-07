@@ -30,7 +30,7 @@ import club.zhcs.titans.utils.db.Result;
  *
  */
 @Controller
-@RequestMapping("/system/*")
+@RequestMapping("system")
 public class SystemController extends BaseController {
 
 	@Autowired
@@ -39,7 +39,7 @@ public class SystemController extends BaseController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping("/login")
+	@RequestMapping("login")
 	public @ResponseBody Result login(@RequestParam("user") String user, @RequestParam("password") String password, @RequestParam("captcha") String captcha,
 			@RequestParam("rememberMe") boolean rememberMe, HttpSession session) {
 		if (Strings.equalsIgnoreCase(captcha, session.getAttribute(JPEGView.CAPTCHA).toString())) {
