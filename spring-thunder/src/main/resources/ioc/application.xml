@@ -7,12 +7,16 @@
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
         http://www.springframework.org/schema/aop 
     	http://www.springframework.org/schema/aop/spring-aop.xsd">
+    	
 	<context:component-scan base-package="club.zhcs" />
 	<mvc:default-servlet-handler />
 	<mvc:annotation-driven />
 	
 	<task:annotation-driven scheduler="myScheduler" />
 	<task:scheduler id="myScheduler" pool-size="20" />
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
 
 	<import resource="classpath*:/ioc/db.xml" />
 	<import resource="classpath*:/ioc/shiro.xml" />

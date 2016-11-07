@@ -36,7 +36,6 @@ import club.zhcs.titans.utils.db.Result;
  *
  */
 @Controller
-@RequestMapping("/*")
 public class HomeController extends BaseController {
 
 	private static final Logger log = Logger.getLogger(HomeController.class);
