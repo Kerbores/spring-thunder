@@ -25,7 +25,7 @@ import eu.bitwalker.useragentutils.UserAgent;
  */
 public class BaseController {
 
-	Logger logger = Logger.getLogger(getClass());
+	public Logger logger = Logger.getLogger(getClass());
 
 	protected void _addCookie(String name, String value, int age) {
 		Cookie cookie = new Cookie(name, value);
