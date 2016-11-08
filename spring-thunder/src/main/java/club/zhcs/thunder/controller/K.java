@@ -1,36 +1,27 @@
 package club.zhcs.thunder.controller;
 
-import org.nutz.dao.Dao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import club.zhcs.thunder.aop.SystemLog;
+import club.zhcs.thunder.controller.base.BaseController;
 import club.zhcs.titans.utils.db.Result;
 
 /**
- * @author kerbores
+ * @author admin
  *
  * @email kerbores@gmail.com
  *
  */
 @Controller
-@RequestMapping("test")
-public class T {
+@RequestMapping("k")
+public class K extends BaseController {
 
-	@Autowired
-	Dao dao;
-
-	@RequestMapping("h")
+	@RequestMapping("d")
+	@SystemLog(module = "k", methods = "d")
 	@ResponseBody
-	public Result h() {
+	public Result name() {
 		return Result.success();
-	}
-
-	@RequestMapping("db")
-	@SystemLog(module = "测试", methods = "db")
-	public @ResponseBody Result db() {
-		return Result.success().addData("db", dao.meta());
 	}
 }

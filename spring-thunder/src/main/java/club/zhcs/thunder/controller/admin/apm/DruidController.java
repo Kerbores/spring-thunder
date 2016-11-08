@@ -55,5 +55,4 @@ public class DruidController extends BaseController {
 		model.addAttribute("obj", Result.success().addData("uri", uri));
 		return "pages/db/uriDetail";
 	}
-
 }

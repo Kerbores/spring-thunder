@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.nutz.lang.Lang;
 import org.nutz.lang.Strings;
 import org.nutz.lang.util.NutMap;
@@ -36,8 +35,6 @@ import club.zhcs.titans.utils.db.Result;
  */
 @Controller
 public class HomeController extends BaseController {
-
-	private static final Logger log = Logger.getLogger(HomeController.class);
 
 	@Autowired
 	APMTask apmTask;
@@ -72,9 +69,9 @@ public class HomeController extends BaseController {
 		}
 
 		if (ImageIO.write(iv.creatImage(), "JPEG", out)) {
-			log.debug("写入输出流成功:" + iv.getVerifyCode() + ".");
+			logger.debug("写入输出流成功:" + iv.getVerifyCode() + ".");
 		} else {
-			log.debug("写入输出流失败:" + iv.getVerifyCode() + ".");
+			logger.debug("写入输出流失败:" + iv.getVerifyCode() + ".");
 		}
 
 		session.setAttribute(JPEGView.CAPTCHA, iv.getVerifyCode());
