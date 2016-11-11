@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import club.zhcs.thunder.Thunder.SessionKeys;
-import club.zhcs.thunder.aop.SystemLog;
 import club.zhcs.thunder.controller.base.BaseController;
 import club.zhcs.thunder.domain.acl.User;
 import club.zhcs.thunder.tasks.APMTask;
@@ -41,7 +40,6 @@ public class HomeController extends BaseController {
 	APMTask apmTask;
 
 	@RequestMapping("/")
-	@SystemLog(module = "首页", methods = "test")
 	public String home(Model model, @SessionAttribute(name = SessionKeys.USER_KEY, required = false) User user) {
 		if (user != null) {
 			return "redirect:/system/main";

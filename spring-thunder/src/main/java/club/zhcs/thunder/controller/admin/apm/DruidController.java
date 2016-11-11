@@ -1,5 +1,6 @@
 package club.zhcs.thunder.controller.admin.apm;
 
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +33,7 @@ public class DruidController extends BaseController {
 	}
 
 	@RequestMapping("dashboard")
-	@RequiresRoles("admin")
+	@RequiresAuthentication
 	public String dashboard(Model model) {
 		model.addAttribute("obj", Result.success().setTitle("Druid 监控"));
 		return "pages/db/dashboard";

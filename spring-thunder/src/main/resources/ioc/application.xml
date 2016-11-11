@@ -10,7 +10,7 @@
     	
 	<context:component-scan base-package="club.zhcs" />
 	<context:annotation-config/>
-	<aop:aspectj-autoproxy proxy-target-class="true" />
+ 	<aop:aspectj-autoproxy proxy-target-class="true" />  
 	<mvc:default-servlet-handler />
 	<mvc:annotation-driven />
 	
