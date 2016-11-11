@@ -64,7 +64,7 @@ public class SystemController extends BaseController {
 	}
 
 	@RequiresAuthentication
-	@RequestMapping("/main")
+	@RequestMapping("main")
 	public String main(@SessionAttribute(name = SessionKeys.USER_KEY, required = false) User user, Model model) {
 		model.addAttribute("obj", Result.success().setTitle("项目说明"));
 		return "pages/admin/main";
