@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import club.zhcs.thunder.Thunder.SessionKeys;
-import club.zhcs.thunder.aop.SystemLog;
 import club.zhcs.thunder.biz.acl.ShiroUserService;
 import club.zhcs.thunder.biz.acl.UserService;
 import club.zhcs.thunder.controller.base.BaseController;
@@ -41,7 +40,6 @@ public class SystemController extends BaseController {
 	UserService userService;
 
 	@RequestMapping("login")
-	@SystemLog(module = "系统", methods = "登录")
 	public @ResponseBody Result login(@RequestParam("user") String user, @RequestParam("password") String password, @RequestParam("captcha") String captcha,
 			@RequestParam("rememberMe") boolean rememberMe, HttpSession session) {
 		if (Strings.equalsIgnoreCase(captcha, session.getAttribute(JPEGView.CAPTCHA).toString())) {
