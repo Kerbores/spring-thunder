@@ -2,21 +2,24 @@ package club.zhcs.thunder.controller.admin.acl;
 
 import java.util.List;
 
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.nutz.dao.entity.Record;
-import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.lang.Lang;
-import org.nutz.mvc.annotation.At;
-import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
-import org.nutz.mvc.annotation.POST;
-import org.nutz.mvc.annotation.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import club.zhcs.thunder.aop.SystemLog;
 import club.zhcs.thunder.biz.acl.UserService;
+import club.zhcs.thunder.controller.base.BaseController;
 import club.zhcs.thunder.domain.InstallPermission;
 import club.zhcs.thunder.domain.acl.User;
 import club.zhcs.thunder.ext.shiro.anno.ThunderRequiresPermissions;
-import club.zhcs.titans.nutz.module.base.AbstractBaseModule;
 import club.zhcs.titans.utils.db.Pager;
 import club.zhcs.titans.utils.db.Result;
 
@@ -33,33 +36,23 @@ import club.zhcs.titans.utils.db.Result;
  * @time 2016年3月8日 上午10:51:26
  *
  */
-@At("user")
-public class UserModule extends AbstractBaseModule {
+@Controller
+@RequestMapping("user")
+public class UserController extends BaseController {
 
-	@Inject
+	@Autowired
 	UserService userService;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.kerbores.nutz.module.base.AbstractBaseModule#_getNameSpace()
-	 */
-	@Override
-	public String _getNameSpace() {
-		return "acl";
-	}
 
 	/**
 	 * 添加用户页面
 	 * 
 	 * @return
 	 */
-	@At
-	@GET
-	@Ok("beetl:pages/admin/auth/user/add_edit.html")
+	@RequestMapping(value = "add", method = RequestMethod.GET)
 	@ThunderRequiresPermissions(InstallPermission.USER_ADD)
-	public Result add() {
-		return Result.success().setTitle("添加用户");
+	public String add(Model model) {
+		model.addAttribute("obj", Result.success().setTitle("添加用户"));
+		return "pages/admin/auth/user/add_edit";
 	}
 
 	/**
@@ -69,10 +62,9 @@ public class UserModule extends AbstractBaseModule {
 	 *            待添加用户
 	 * @return
 	 */
-	@At
-	@POST
+	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ThunderRequiresPermissions(InstallPermission.USER_ADD)
-	public Result add(@Param("..") User user) {
+	public @ResponseBody Result add(User user) {
 		user.setPassword(Lang.md5(user.getPassword()));
 		return userService.save(user) != null ? Result.success().addData("user", user) : Result.fail("添加用户失败!");
 	}
@@ -84,10 +76,9 @@ public class UserModule extends AbstractBaseModule {
 	 *            用户id
 	 * @return
 	 */
-	@At("/delete/*")
+	@RequestMapping("/delete/{id}")
 	@ThunderRequiresPermissions(InstallPermission.USER_DELETE)
-	@RequiresRoles("admin")
-	public Result delete(int id) {
+	public @ResponseBody Result delete(@PathVariable("id") int id) {
 		return userService.delete(id) == 1 ? Result.success() : Result.fail("删除用户失败!");
 	}
 
@@ -98,11 +89,11 @@ public class UserModule extends AbstractBaseModule {
 	 *            用户id
 	 * @return
 	 */
-	@At("/detail/*")
-	@Ok("beetl:pages/admin/auth/user/detail.html")
+	@RequestMapping("/detail/{id}")
 	@ThunderRequiresPermissions(InstallPermission.USER_DETAIL)
-	public Result detail(int id) {
-		return Result.success().addData("user", userService.fetch(id)).setTitle("用户详情");
+	public String detail(@PathVariable("id") int id, Model model) {
+		model.addAttribute("obj", Result.success().addData("user", userService.fetch(id)).setTitle("用户详情"));
+		return "pages/admin/auth/user/detail";
 	}
 
 	/**
@@ -112,12 +103,12 @@ public class UserModule extends AbstractBaseModule {
 	 *            用户id
 	 * @return
 	 */
-	@At("/edit/*")
-	@GET
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	@Ok("beetl:pages/admin/auth/user/add_edit.html")
 	@ThunderRequiresPermissions(InstallPermission.USER_EDIT)
-	public Result edit(int id) {
-		return Result.success().addData("user", userService.fetch(id)).setTitle("编辑用户");
+	public String edit(@PathVariable("id") int id, Model model) {
+		model.addAttribute("obj", Result.success().addData("user", userService.fetch(id)).setTitle("编辑用户"));
+		return "pages/admin/auth/user/add_edit";
 	}
 
 	/**
@@ -127,10 +118,9 @@ public class UserModule extends AbstractBaseModule {
 	 *            待更新用户
 	 * @return
 	 */
-	@At
-	@POST
+	@RequestMapping(value = "edit", method = RequestMethod.POST)
 	@ThunderRequiresPermissions(InstallPermission.USER_EDIT)
-	public Result edit(@Param("..") User user) {
+	public @ResponseBody Result edit(User user) {
 		return userService.update(user, "realName", "phone", "email", "status") ? Result.success() : Result.fail("更新失败!");
 	}
 
@@ -140,13 +130,12 @@ public class UserModule extends AbstractBaseModule {
 	 * @param id
 	 * @return
 	 */
-	@At("/grant/*")
-	@GET
-	@Ok("beetl:pages/admin/auth/user/grant.html")
+	@RequestMapping(value = "/grant/{id}", method = RequestMethod.GET)
 	@ThunderRequiresPermissions(InstallPermission.USER_GRANT)
-	public Result grant(int id) {
+	public String grant(@PathVariable("id") int id, Model model) {
 		List<Record> records = userService.findPermissionsWithUserPowerdInfoByUserId(id);
-		return Result.success().addData("records", records).addData("userId", id).setTitle("用户授权");
+		model.addAttribute("obj", Result.success().addData("records", records).addData("userId", id).setTitle("用户授权"));
+		return "pages/admin/auth/user/grant";
 	}
 
 	/**
@@ -156,9 +145,9 @@ public class UserModule extends AbstractBaseModule {
 	 * @param id
 	 * @return
 	 */
-	@At
+	@RequestMapping("grant")
 	@ThunderRequiresPermissions(InstallPermission.USER_GRANT)
-	public Result grant(@Param("permissions") int[] ids, @Param("id") int id) {
+	public @ResponseBody Result grant(@RequestParam("permissions") int[] ids, @RequestParam("id") int id) {
 		return userService.setPermission(ids, id);
 	}
 
@@ -169,16 +158,15 @@ public class UserModule extends AbstractBaseModule {
 	 *            页码
 	 * @return
 	 */
-	@At
-	@Ok("beetl:pages/admin/auth/user/list.html")
+	@RequestMapping("list")
 	@ThunderRequiresPermissions(InstallPermission.USER_LIST)
-	// @SystemLog(module = "用户管理", methods = "用户列表")
-	public Result list(@Param(value = "page", df = "1") int page) {
-
+	@SystemLog(module = "用户管理", methods = "用户列表")
+	public String list(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 		page = _fixPage(page);
 		Pager<User> pager = userService.searchByPage(page);
 		pager.setUrl(_base() + "/user/list");
-		return Result.success().addData("pager", pager).setTitle("用户列表");
+		model.addAttribute("obj", Result.success().addData("pager", pager).setTitle("用户列表"));
+		return "pages/admin/auth/user/list";
 	}
 
 	/**
@@ -188,13 +176,12 @@ public class UserModule extends AbstractBaseModule {
 	 *            用户id
 	 * @return
 	 */
-	@At("/role/*")
-	@GET
+	@RequestMapping(value = "/role/{id}", method = RequestMethod.GET)
 	@ThunderRequiresPermissions(InstallPermission.USER_ROLE)
-	@Ok("beetl:pages/admin/auth/user/role.html")
-	public Result role(int id) {
+	public String role(@PathVariable("id") int id, Model model) {
 		List<Record> records = userService.findRolesWithUserPowerdInfoByUserId(id);
-		return Result.success().addData("records", records).addData("userId", id).setTitle("用户角色");
+		model.addAttribute("obj", Result.success().addData("records", records).addData("userId", id).setTitle("用户角色"));
+		return "pages/admin/auth/user/role";
 	}
 
 	/**
@@ -206,9 +193,9 @@ public class UserModule extends AbstractBaseModule {
 	 *            用户id
 	 * @return
 	 */
-	@At
+	@RequestMapping("role")
 	@ThunderRequiresPermissions(InstallPermission.USER_ROLE)
-	public Result role(@Param("roles") int[] ids, @Param("id") int id) {
+	public @ResponseBody Result role(@RequestParam("roles") int[] ids, @RequestParam("id") int id) {
 		return userService.setRole(ids, id);
 	}
 
@@ -221,16 +208,16 @@ public class UserModule extends AbstractBaseModule {
 	 *            页码
 	 * @return
 	 */
-	@At
-	@Ok("beetl:pages/admin/auth/user/list.html")
+	@RequestMapping("search")
 	@ThunderRequiresPermissions(InstallPermission.USER_LIST)
-	public Result search(@Param("key") String key, @Param(value = "page", df = "1") int page) {
+	public String search(@RequestParam("key") String key, @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 		page = _fixPage(page);
 		key = _fixSearchKey(key);
 		Pager<User> pager = userService.searchByKeyAndPage(key, page, "name", "nickName", "realName");
 		pager.setUrl(_base() + "/user/search");
 		pager.addParas("key", key);
-		return Result.success().addData("pager", pager).setTitle("用户检索");
+		model.addAttribute("obj", Result.success().addData("pager", pager).setTitle("用户检索"));
+		return "pages/admin/auth/user/list";
 	}
 
 }
