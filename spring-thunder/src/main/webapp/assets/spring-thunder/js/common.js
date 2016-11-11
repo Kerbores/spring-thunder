@@ -96,6 +96,9 @@ $(function() {
 	$('.pagination .disabled a').on('click', function() {
 		return false;
 	});
+	$('.ellipsis-col').attr('style',"max-width: "+$('.ellipsis-col').data('width')+"px").on('mouseenter',function(){
+		layer.msg($(this).text());
+	});
 })
 
 Date.prototype.format = function(format) {

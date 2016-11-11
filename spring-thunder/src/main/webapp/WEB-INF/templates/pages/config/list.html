@@ -35,7 +35,7 @@ layout("/layout/default.html",{"menu":["config","config_admin"],"breadcrumbs":[{
 		<!--# for(config in obj.data.pager.entities){ #-->
 		<tr>
 			<td>${config.name!}</td>
-			<td>${config.value!}</td>
+			<td><span class="ellipsis-col" data-width="1000">${config.value!}</span></td>
 			<td>
 			<!--# if(hasPermission('config.edit')){ #-->
 			<a class="btn btn-xs btn-info" href="${base}/config/edit/?key=${config.name!}"> <i class="ace-icon fa fa-pencil bigger-120"></i> 编辑

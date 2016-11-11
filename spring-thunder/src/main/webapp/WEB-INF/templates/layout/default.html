@@ -27,6 +27,14 @@
 <link href="${base}/assets/metronic/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
 <link href="${base}/assets/metronic/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="${base}/assets/spring-thunder/images/spring-thunder.ico " />
+<style type="text/css">
+.ellipsis-col {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+</style>
 
 <link rel="shortcut icon" href="${base}/assets/spring-thunder/images/spring-thunder.ico " />
 <script src="${base}/assets/metronic/global/plugins/jquery.min.js" type="text/javascript"></script>
@@ -39,18 +47,18 @@
 	<div class="page-header navbar navbar-fixed-top">
 		<div class="page-header-inner ">
 			<div class="page-logo">
-				<a href="#"> <img src="${base}/assets/spring-thunder/images/spring-thunder.png" height="28"  alt="logo" class="logo-default" />
+				<a href="#"> <img src="${base}/assets/spring-thunder/images/spring-thunder.png" height="28" alt="logo" class="logo-default" />
 				</a>
 				<div class="menu-toggler sidebar-toggler"></div>
 			</div>
 			<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
 			<div class="top-menu">
 				<ul class="nav navbar-nav pull-right">
-						<li class="dropdown dropdown-user"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"> <img alt=""
-							class="img-circle" src="${null != loginUser('heanKey') ? loginUser('heanKey') : base + '/assets/metronic/layouts/layout/img/avatar3_small.jpg' }" /> <span class="username username-hide-on-mobile"> ${loginUser('realName') } </span> <i
-							class="fa fa-angle-down"></i>
-							</a>
-					
+					<li class="dropdown dropdown-user"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"> <img alt=""
+							class="img-circle" src="${null != loginUser('heanKey') ? loginUser('heanKey') : base + '/assets/metronic/layouts/layout/img/avatar3_small.jpg' }" /> <span
+							class="username username-hide-on-mobile"> ${loginUser('realName') } </span> <i class="fa fa-angle-down"></i>
+					</a>
+
 						<ul class="dropdown-menu dropdown-menu-default">
 							<li><a href="${base!}/setting/profile"> <i class="icon-user"></i> 我的资料
 							</a></li>
@@ -80,24 +88,24 @@
 								</a>
 								</span>
 							</div>
-						</form> 
+						</form>
 					</li>
-					
+
 					<li class="nav-item ${ menu[0] =='main' ?'active open':''}"><a href="${base!}/system/main" class="nav-link nav-toggle"> <i class="fa fa-sticky-note"></i> <span
 							class="title">项目说明</span>
 					</a></li>
-					
-					<li class="nav-item start ${ menu[0] =='apm' ?'active open':''}"><a href="javascript:;" class="nav-link nav-toggle"> <i class="fa fa-tachometer"></i> <span class="title">APM控制台</span> <span
-							class="arrow open"></span>
+
+					<li class="nav-item start ${ menu[0] =='apm' ?'active open':''}"><a href="javascript:;" class="nav-link nav-toggle"> <i class="fa fa-tachometer"></i> <span
+							class="title">APM控制台</span> <span class="arrow open"></span>
 					</a>
 						<ul class="sub-menu">
 							<li class="nav-item start ${ menu[1] =='apm' ?'active':''}"><a href="${base}/apm/dashboard" class="nav-link "> <i class="fa fa-server"></i> <span class="title">本机状态</span>
 							</a></li>
 							<li class="nav-item  start ${ menu[1] =='db' ?'active':''}"><a href="${base}/db/dashboard" class="nav-link "> <i class="fa fa-database"></i> <span class="title">Druid监控</span>
 							</a></li>
-							<li class="nav-item  start ${ menu[1] =='login' ?'active':''}"><a href="${base}/login/list" class="nav-link "> <i class="fa fa-tag"></i> <span class="title">登录日志</span> 
+							<li class="nav-item  start ${ menu[1] =='login' ?'active':''}"><a href="${base}/login/list" class="nav-link "> <i class="fa fa-tag"></i> <span class="title">登录日志</span>
 							</a></li>
-							<li class="nav-item  start ${ menu[1] =='ops' ?'active':''}"><a href="${base}/operation/list" class="nav-link "> <i class="fa fa-history"></i> <span class="title">业务追踪</span> 
+							<li class="nav-item  start ${ menu[1] =='ops' ?'active':''}"><a href="${base}/operation/list" class="nav-link "> <i class="fa fa-history"></i> <span class="title">业务追踪</span>
 							</a></li>
 						</ul></li>
 					<li class="heading">
@@ -116,16 +124,16 @@
 							</a></li>
 							<!--# } #-->
 							<!--# if(hasPermission('role.list')){ #-->
-							<li class="nav-item  ${ menu[1] =='role_admin' ?'active':''}"><a href="${base!}/role/list" class="nav-link "><i class="fa fa-lock"></i>  <span class="title">角色管理 </span>
-							</a></li>
+							<li class="nav-item  ${ menu[1] =='role_admin' ?'active':''}"><a href="${base!}/role/list" class="nav-link "><i class="fa fa-lock"></i> <span class="title">角色管理
+								</span> </a></li>
 							<!--# } #-->
 							<!--# if(hasPermission('permission.list')){ #-->
-							<li class="nav-item  ${ menu[1] =='permission_admin' ?'active':''}"><a href="${base!}/permission/list" class="nav-link "><i class="fa fa-eye"></i>  <span class="title">权限管理</span>
-							</a></li>
+							<li class="nav-item  ${ menu[1] =='permission_admin' ?'active':''}"><a href="${base!}/permission/list" class="nav-link "><i class="fa fa-eye"></i> <span
+									class="title">权限管理</span> </a></li>
 							<!--# } #-->
 						</ul></li>
-						<!--# if(hasPermission('config.list')){ #-->
-						<li class="nav-item ${ menu[0] =='config' ?'active open':''}"><a href="${base!}/config/list" class="nav-link nav-toggle"> <i class="icon-cogs fa fa-cogs"></i> <span
+					<!--# if(hasPermission('config.list')){ #-->
+					<li class="nav-item ${ menu[0] =='config' ?'active open':''}"><a href="${base!}/config/list" class="nav-link nav-toggle"> <i class="icon-cogs fa fa-cogs"></i> <span
 							class="title">配置管理</span>
 					</a></li>
 					<!--# } #-->

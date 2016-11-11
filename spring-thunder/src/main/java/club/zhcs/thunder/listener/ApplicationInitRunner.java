@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.util.Daos;
+import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.lang.ContinueLoop;
 import org.nutz.lang.Each;
 import org.nutz.lang.ExitLoop;
@@ -18,6 +19,7 @@ import club.zhcs.thunder.biz.acl.RolePermissionService;
 import club.zhcs.thunder.biz.acl.RoleService;
 import club.zhcs.thunder.biz.acl.UserRoleService;
 import club.zhcs.thunder.biz.acl.UserService;
+import club.zhcs.thunder.biz.config.ConfigService;
 import club.zhcs.thunder.domain.InstallPermission;
 import club.zhcs.thunder.domain.InstalledRole;
 import club.zhcs.thunder.domain.acl.Permission;
@@ -26,6 +28,7 @@ import club.zhcs.thunder.domain.acl.RolePermission;
 import club.zhcs.thunder.domain.acl.User;
 import club.zhcs.thunder.domain.acl.User.Status;
 import club.zhcs.thunder.domain.acl.UserRole;
+import club.zhcs.thunder.domain.config.Config;
 import club.zhcs.thunder.ext.spring.SpringBeans;
 
 /**
@@ -135,6 +138,32 @@ public class ApplicationInitRunner implements ApplicationListener<ContextRefresh
 			ur.setRoleId(admin.getId());
 			userRoleService.save(ur);
 		}
+
+		ConfigService configService = context.getBean(ConfigService.class);
+		PropertiesProxy p = context.getBean(PropertiesProxy.class);
+
+		Lang.each(p.toMap().keySet(), new Each<String>() {
+
+			@Override
+			public void invoke(int index, String key, int length) throws ExitLoop, ContinueLoop, LoopException {
+				if (configService.fetch(Cnd.where("name", "=", key)) == null) {// 没有配置
+					Config config = new Config();
+					config.setName(key);
+					config.setValue(p.get(key));
+					config.setInstalled(true);
+					configService.save(config);
+				}
+			}
+		});
+
+		// 加载
+		Lang.each(configService.queryAll(), new Each<Config>() {
+
+			@Override
+			public void invoke(int arg0, Config config, int arg2) throws ExitLoop, ContinueLoop, LoopException {
+				p.put(config.getName(), config.getValue());
+			}
+		});
 	}
 
 }
