@@ -1,40 +1,34 @@
 package club.zhcs.thunder.controller.admin.acl;
 
-import java.util.List;
-
-import org.nutz.dao.entity.Record;
-import org.nutz.ioc.loader.annotation.Inject;
-import org.nutz.mvc.annotation.At;
-import org.nutz.mvc.annotation.GET;
-import org.nutz.mvc.annotation.Ok;
-import org.nutz.mvc.annotation.POST;
-import org.nutz.mvc.annotation.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import club.zhcs.thunder.biz.acl.RoleService;
+import club.zhcs.thunder.controller.HomeController;
 import club.zhcs.thunder.domain.InstallPermission;
 import club.zhcs.thunder.domain.acl.Role;
 import club.zhcs.thunder.ext.shiro.anno.ThunderRequiresPermissions;
-import club.zhcs.titans.nutz.module.base.AbstractBaseModule;
 import club.zhcs.titans.utils.db.Pager;
 import club.zhcs.titans.utils.db.Result;
 
 /**
  * 
- * @author 王贵源
+ * @author admin
  *
- * @email kerbores@kerbores.com
+ * @email kerbores@gmail.com
  *
- * @description 角色控制器
- * 
- * @copyright 内部代码,禁止转发
- *
- *
- * @time 2016年1月26日 下午3:38:21
  */
-@At("role")
-public class RoleModule extends AbstractBaseModule {
+@Controller
+@RequestMapping("role")
+public class RoleController extends HomeController {
 
-	@Inject
+	@Autowired
 	private RoleService roleService;
 
 	/*
@@ -52,12 +46,11 @@ public class RoleModule extends AbstractBaseModule {
 	 * 
 	 * @return
 	 */
-	@At
-	@GET
-	@Ok("beetl:pages/admin/auth/role/add_edit.html")
+	@RequestMapping(value = "add", method = RequestMethod.GET)
 	@ThunderRequiresPermissions(InstallPermission.ROLE_ADD)
-	public Result add() {
-		return Result.success().setTitle("添加角色");
+	public String add(Model model) {
+		model.addAttribute("obj", Result.success().setTitle("添加角色"));
+		return "pages/admin/auth/role/add_edit";
 	}
 
 	/**
@@ -67,10 +60,9 @@ public class RoleModule extends AbstractBaseModule {
 	 *            待添加角色
 	 * @return
 	 */
-	@At
-	@POST
+	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ThunderRequiresPermissions(InstallPermission.ROLE_ADD)
-	public Result add(@Param("..") Role role) {
+	public @ResponseBody Result add(Role role) {
 		if (null != roleService.fetch(role.getName())) {
 			return Result.fail("角色" + role.getName() + "已存在");
 		}
@@ -86,9 +78,9 @@ public class RoleModule extends AbstractBaseModule {
 	 *            角色id
 	 * @return
 	 */
-	@At("/delete/*")
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@ThunderRequiresPermissions(InstallPermission.ROLE_DELETE)
-	public Result delete(int id) {
+	public @ResponseBody Result delete(@PathVariable("id") int id) {
 		return roleService.delete(id) == 1 ? Result.success() : Result.fail("删除失败!");
 	}
 
@@ -99,12 +91,11 @@ public class RoleModule extends AbstractBaseModule {
 	 *            角色id
 	 * @return
 	 */
-	@At("/edit/*")
-	@Ok("beetl:pages/admin/auth/role/add_edit.html")
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	@ThunderRequiresPermissions(InstallPermission.ROLE_EDIT)
-	public Result edit(int id) {
-		Role role = roleService.fetch(id);
-		return Result.success().addData("role", role).setTitle("编辑角色");
+	public String edit(@PathVariable("id") int id, Model model) {
+		model.addAttribute("obj", Result.success().addData("role", roleService.fetch(id)).setTitle("编辑角色"));
+		return "pages/admin/auth/role/add_edit";
 	}
 
 	/**
@@ -115,13 +106,11 @@ public class RoleModule extends AbstractBaseModule {
 	 *
 	 * @author 王贵源
 	 */
-	@At("/grant/*")
-	@GET
-	@Ok("beetl:pages/admin/auth/role/grant.html")
+	@RequestMapping(value = "/grant/{id}", method = RequestMethod.GET)
 	@ThunderRequiresPermissions(InstallPermission.ROLE_GRANT)
-	public Result grant(int id) {
-		List<Record> records = roleService.findPermissionsWithRolePowerdInfoByRoleId(id);
-		return Result.success().addData("records", records).addData("roleId", id).setTitle("角色授权");
+	public String grant(@PathVariable("id") int id, Model model) {
+		model.addAttribute("obj", Result.success().addData("records", roleService.findPermissionsWithRolePowerdInfoByRoleId(id)).addData("roleId", id).setTitle("角色授权"));
+		return "pages/admin/auth/role/grant";
 	}
 
 	/**
@@ -133,10 +122,9 @@ public class RoleModule extends AbstractBaseModule {
 	 *
 	 * @author 王贵源
 	 */
-	@At
-	@POST
+	@RequestMapping(value = "grant", method = RequestMethod.POST)
 	@ThunderRequiresPermissions(InstallPermission.ROLE_GRANT)
-	public Result grant(@Param("permissions") int[] ids, @Param("id") int roleId) {
+	public @ResponseBody Result grant(@RequestParam(value = "permissions", defaultValue = "") int[] ids, @RequestParam("id") int roleId) {
 		return roleService.setPermission(ids, roleId);
 	}
 
@@ -147,14 +135,14 @@ public class RoleModule extends AbstractBaseModule {
 	 *            页码
 	 * @return
 	 */
-	@At
-	@Ok("beetl:pages/admin/auth/role/list.html")
+	@RequestMapping(value = "list", method = RequestMethod.GET)
 	@ThunderRequiresPermissions(InstallPermission.ROLE_LIST)
-	public Result list(@Param(value = "page", df = "1") int page) {
+	public String list(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 		page = _fixPage(page);
 		Pager<Role> pager = roleService.searchByPage(page);
 		pager.setUrl(_base() + "/role/list");
-		return Result.success().addData("pager", pager).setTitle("角色列表");
+		model.addAttribute("obj", Result.success().addData("pager", pager).setTitle("角色列表"));
+		return "pages/admin/auth/role/list";
 	}
 
 	/**
@@ -166,16 +154,16 @@ public class RoleModule extends AbstractBaseModule {
 	 *            关键词
 	 * @return
 	 */
-	@At
-	@Ok("beetl:pages/admin/auth/role/list.html")
+	@RequestMapping(value = "search", method = RequestMethod.GET)
 	@ThunderRequiresPermissions(InstallPermission.ROLE_LIST)
-	public Result search(@Param(value = "page", df = "1") int page, @Param("key") String key) {
+	public String search(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam("key") String key, Model model) {
 		page = _fixPage(page);
 		key = _fixSearchKey(key);
 		Pager<Role> pager = roleService.searchByKeyAndPage(key, page, "name", "description");
 		pager.setUrl(_base() + "/role/search");
 		pager.addParas("key", key);
-		return Result.success().addData("pager", pager).setTitle("角色检索");
+		model.addAttribute("obj", Result.success().addData("pager", pager).setTitle("角色检索"));
+		return "pages/admin/auth/role/list";
 	}
 
 	/**
@@ -185,10 +173,9 @@ public class RoleModule extends AbstractBaseModule {
 	 *            待更新角色
 	 * @return
 	 */
-	@At
-	@POST
+	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@ThunderRequiresPermissions(InstallPermission.ROLE_EDIT)
-	public Result update(@Param("..") Role role) {
+	public @ResponseBody Result update(Role role) {
 		return roleService.update(role, "description") == 1 ? Result.success() : Result.fail("更新失败!");
 	}
 }

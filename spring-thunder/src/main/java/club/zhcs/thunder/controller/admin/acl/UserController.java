@@ -147,7 +147,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("grant")
 	@ThunderRequiresPermissions(InstallPermission.USER_GRANT)
-	public @ResponseBody Result grant(@RequestParam("permissions") int[] ids, @RequestParam("id") int id) {
+	public @ResponseBody Result grant(@RequestParam(value = "permissions", defaultValue = "") int[] ids, @RequestParam("id") int id) {
 		return userService.setPermission(ids, id);
 	}
 
@@ -195,7 +195,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("role")
 	@ThunderRequiresPermissions(InstallPermission.USER_ROLE)
-	public @ResponseBody Result role(@RequestParam("roles") int[] ids, @RequestParam("id") int id) {
+	public @ResponseBody Result role(@RequestParam(value = "roles", defaultValue = "") int[] ids, @RequestParam("id") int id) {
 		return userService.setRole(ids, id);
 	}
 
