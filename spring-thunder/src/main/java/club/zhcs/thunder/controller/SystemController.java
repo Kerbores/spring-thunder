@@ -2,6 +2,7 @@ package club.zhcs.thunder.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.nutz.json.Json;
 import org.nutz.lang.Strings;
@@ -59,6 +60,16 @@ public class SystemController extends BaseController {
 		} else {
 			return Result.fail("验证码输入错误");
 		}
+	}
+
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		try {
+			SecurityUtils.getSubject().logout();
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+		return "redirect:/";
 	}
 
 	@RequiresAuthentication
