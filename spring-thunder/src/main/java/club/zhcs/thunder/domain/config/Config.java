@@ -1,6 +1,7 @@
 package club.zhcs.thunder.domain.config;
 
 import org.nutz.dao.entity.annotation.ColDefine;
+import org.nutz.dao.entity.annotation.ColType;
 import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Comment;
 import org.nutz.dao.entity.annotation.Name;
@@ -25,6 +26,7 @@ public class Config extends Entity {
 
 	@Column("cfg_value")
 	@Comment("配置值")
+	@ColDefine(type = ColType.TEXT)
 	private String value;
 
 	@Column("cfg_description")

@@ -26,6 +26,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import com.alibaba.druid.filter.config.ConfigTools;
 import com.google.common.collect.Lists;
 
 import club.zhcs.thunder.biz.EmailService;
@@ -50,6 +51,11 @@ import club.zhcs.titans.utils.db.Result;
  */
 @Component
 public class APMTask {
+
+	public static void main(String[] args) throws Exception {
+		ConfigTools.main(new String[] { "G00dl^ck" });
+	}
+
 	private static Log LOG = Logs.getLog(APMTask.class);
 
 	@Autowired
