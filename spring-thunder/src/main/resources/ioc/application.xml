@@ -22,6 +22,7 @@
 	<import resource="classpath*:/ioc/db.xml" />
 	<import resource="classpath*:/ioc/shiro.xml" />
 	<import resource="classpath*:/ioc/email.xml" />
+	<import resource="classpath*:/ioc/flowable.xml" />
 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
