@@ -133,5 +133,22 @@
 			<artifactId>commons-email</artifactId>
 			<version>1.4</version>
 		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.flowable/flowable-engine -->
+		<dependency>
+			<groupId>org.flowable</groupId>
+			<artifactId>flowable-engine</artifactId>
+			<version>5.22.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.flowable/flowable-spring -->
+		<dependency>
+			<groupId>org.flowable</groupId>
+			<artifactId>flowable-spring</artifactId>
+			<version>5.22.0</version>
+		</dependency>
+
+
 	</dependencies>
 </project>
