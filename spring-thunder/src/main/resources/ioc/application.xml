@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns="http://www.springframework.org/schema/beans" xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/task 
+        http://www.springframework.org/schema/task/spring-task.xsd
         http://www.springframework.org/schema/aop 
     	http://www.springframework.org/schema/aop/spring-aop.xsd">
-    	
+
+    <import resource="classpath*:/ioc/db.xml" />
+	<import resource="classpath*:/ioc/shiro.xml" />
+	<import resource="classpath*:/ioc/email.xml" />
+	<import resource="classpath*:/ioc/flowable.xml" />
+	
 	<context:component-scan base-package="club.zhcs" />
 	<context:annotation-config/>
  	<aop:aspectj-autoproxy proxy-target-class="true" />  
@@ -16,13 +26,6 @@
 	
 	<task:annotation-driven scheduler="myScheduler" />
 	<task:scheduler id="myScheduler" pool-size="20" />
-
-
-
-	<import resource="classpath*:/ioc/db.xml" />
-	<import resource="classpath*:/ioc/shiro.xml" />
-	<import resource="classpath*:/ioc/email.xml" />
-	<import resource="classpath*:/ioc/flowable.xml" />
 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
