@@ -120,7 +120,7 @@ public class OperationLogAop {
 		if (signature.getMethod().getAnnotation(ResponseBody.class) != null) {
 			return obj;
 		}
-		// 如果不是获取 Model 中的属性
+		// 如果不是ajax 获取 Model 中的属性
 		for (Object o : point.getArgs()) {
 			if (o instanceof Model) {
 				Model m = (Model) o;
