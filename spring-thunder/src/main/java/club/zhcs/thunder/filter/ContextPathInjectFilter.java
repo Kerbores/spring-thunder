@@ -8,6 +8,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
+import com.alibaba.druid.filter.config.ConfigTools;
 
 /**
  * @author admin
@@ -16,6 +19,14 @@ import javax.servlet.ServletResponse;
  *
  */
 public class ContextPathInjectFilter implements Filter {
+	
+	{
+		try {
+			ConfigTools.main(new String[]{"sss"});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -35,7 +46,7 @@ public class ContextPathInjectFilter implements Filter {
 	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		request.setAttribute("base", request.getServletContext().getContextPath());
+		request.setAttribute("base", ((HttpServletRequest)request).getContextPath());
 		chain.doFilter(request, response);
 	}
 

@@ -121,7 +121,6 @@ public class BaseService<T extends Entity> extends IdNameEntityService<T> {
 	 *            是否忽略空字符串
 	 * @return
 	 */
-	@Override
 	public T insert(final T t, boolean ignoreNull, boolean ignoreZero, boolean ignoreBlankStr) {
 		return dao().insert(t, ignoreNull, ignoreZero, ignoreBlankStr);
 	}
@@ -135,7 +134,6 @@ public class BaseService<T extends Entity> extends IdNameEntityService<T> {
 	 *            字段正则
 	 * @return
 	 */
-	@Override
 	public T insertWith(T obj, String regex) {
 		return dao().insertWith(obj, regex);
 	}
@@ -149,7 +147,6 @@ public class BaseService<T extends Entity> extends IdNameEntityService<T> {
 	 *            管理字段正则
 	 * @return
 	 */
-	@Override
 	public T insertLinks(T obj, String regex) {
 		return dao().insertLinks(obj, regex);
 	}
@@ -161,7 +158,6 @@ public class BaseService<T extends Entity> extends IdNameEntityService<T> {
 	 * @param regex
 	 * @return
 	 */
-	@Override
 	public T insertRelation(T obj, String regex) {
 		return dao().insertRelation(obj, regex);
 	}
@@ -374,12 +370,10 @@ public class BaseService<T extends Entity> extends IdNameEntityService<T> {
 
 	// U
 
-	@Override
 	public int update(T obj) {
 		return dao().update(obj);
 	}
 
-	@Override
 	public int update(final T obj, String regex) {
 		return dao().update(obj, regex);
 	}
@@ -393,12 +387,10 @@ public class BaseService<T extends Entity> extends IdNameEntityService<T> {
 		return dao().update(getEntityClass(), chain, cnd);
 	}
 
-	@Override
 	public T updateWith(T obj, final String regex) {
 		return dao().updateWith(obj, regex);
 	}
 
-	@Override
 	public T updateLinks(T obj, final String regex) {
 		return dao().updateLinks(obj, regex);
 	}
@@ -498,22 +490,18 @@ public class BaseService<T extends Entity> extends IdNameEntityService<T> {
 	 * @param regex
 	 * @return
 	 */
-	@Override
 	public T clearLinks(T obj, final String regex) {
 		return dao().clearLinks(obj, regex);
 	}
 
-	@Override
 	public int delete(T obj) {
 		return dao().delete(obj);
 	}
 
-	@Override
 	public int deleteWith(T obj, final String regex) {
 		return dao().deleteWith(obj, regex);
 	}
 
-	@Override
 	public int deleteLinks(T obj, final String regex) {
 		return dao().deleteLinks(obj, regex);
 	}
