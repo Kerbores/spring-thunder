@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow-project-description>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.8.2.201610040608-RELEASE]]></pluginVersion>
+	<configs>
+		<config>
+			<file>src/main/resources/ioc/1.xml</file>
+			<name><![CDATA[1]]></name>
+		</config>
+	</configs>
+</webflow-project-description>
