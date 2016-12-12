@@ -2,6 +2,7 @@ package club.zhcs.thunder.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import club.zhcs.thunder.Thunder.SessionKeys;
 import club.zhcs.thunder.controller.base.BaseController;
 import club.zhcs.thunder.domain.acl.User;
+import club.zhcs.thunder.mapper.UserMapper;
 import club.zhcs.thunder.tasks.APMTask;
 import club.zhcs.titans.nutz.captcha.ImageVerification;
 import club.zhcs.titans.nutz.captcha.JPEGView;
@@ -51,6 +53,14 @@ public class HomeController extends BaseController {
 		}
 		model.addAttribute("loginInfo", data);
 		return "pages/login/login";
+	}
+	
+	@Autowired
+	UserMapper userMapper;
+	
+	@RequestMapping("/mapper")
+	public @ResponseBody List<club.zhcs.thunder.bean.User> mapper() {
+		return  userMapper.selectAll();
 	}
 
 	@RequestMapping("/captcha")
