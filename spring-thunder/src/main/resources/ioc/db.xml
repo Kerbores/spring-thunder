@@ -108,5 +108,16 @@
 			</array>
 		</property>
 		<property name="typeAliasesPackage" value="club.zhcs.thunder.bean" />
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<value>
+							dialect=mysql
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
 	</bean>
 </beans>

@@ -2,7 +2,6 @@ package club.zhcs.thunder.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 import club.zhcs.thunder.Thunder.SessionKeys;
 import club.zhcs.thunder.controller.base.BaseController;
@@ -54,17 +56,21 @@ public class HomeController extends BaseController {
 		model.addAttribute("loginInfo", data);
 		return "pages/login/login";
 	}
-	
+
 	@Autowired
 	UserMapper userMapper;
-	
+
 	@RequestMapping("/mapper")
-	public @ResponseBody List<club.zhcs.thunder.bean.User> mapper() {
-		return  userMapper.selectAll();
+	public @ResponseBody Page<club.zhcs.thunder.bean.User> mapper() {
+		Page<club.zhcs.thunder.bean.User> page = PageHelper.startPage(1, 10);
+		userMapper.selectAll();
+		System.err.println(page.getPageNum());
+		return page;
 	}
 
 	@RequestMapping("/captcha")
-	public void captcha(@RequestParam("length") int length, HttpServletResponse resp, HttpSession session) throws IOException {
+	public void captcha(@RequestParam("length") int length, HttpServletResponse resp, HttpSession session)
+			throws IOException {
 		resp.setContentType("image/jpeg");
 		resp.setHeader("Pragma", "No-cache");
 		resp.setHeader("Cache-Control", "no-cache");
