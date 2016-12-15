@@ -18,13 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-
 import club.zhcs.thunder.Thunder.SessionKeys;
 import club.zhcs.thunder.controller.base.BaseController;
 import club.zhcs.thunder.domain.acl.User;
-import club.zhcs.thunder.mapper.UserMapper;
 import club.zhcs.thunder.tasks.APMTask;
 import club.zhcs.titans.nutz.captcha.ImageVerification;
 import club.zhcs.titans.nutz.captcha.JPEGView;
@@ -55,17 +51,6 @@ public class HomeController extends BaseController {
 		}
 		model.addAttribute("loginInfo", data);
 		return "pages/login/login";
-	}
-
-	@Autowired
-	UserMapper userMapper;
-
-	@RequestMapping("/mapper")
-	public @ResponseBody Page<club.zhcs.thunder.bean.User> mapper() {
-		Page<club.zhcs.thunder.bean.User> page = PageHelper.startPage(1, 10);
-		userMapper.selectAll();
-		System.err.println(page.getPageNum());
-		return page;
 	}
 
 	@RequestMapping("/captcha")
