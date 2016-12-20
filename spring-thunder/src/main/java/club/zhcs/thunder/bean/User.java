@@ -9,10 +9,9 @@ import javax.persistence.Table;
 
 import org.nutz.lang.Times;
 
+@Table(name = "t_user")
+public class User extends BaseEntity {
 
-@Table(name ="t_user")
-public class User {
-	
 	public static enum Status {
 		ACTIVED("正常"), DISABLED("禁用");
 		/**
@@ -43,44 +42,42 @@ public class User {
 	public static enum Type {
 		PLATFORM, MERCHANTS, CUSTOMER
 	}
-	
-	
+
 	@Id
 	@GeneratedValue(generator = "JDBC")
 	private int id;
 
-	@Column(name  ="u_name")
+	@Column(name = "u_name")
 	private String name;
 
-	@Column(name ="u_real_name")
+	@Column(name = "u_real_name")
 	private String realName;
 
-	@Column(name ="u_nick_name")
+	@Column(name = "u_nick_name")
 	private String nickName;
 
-	@Column(name ="u_pwd")
+	@Column(name = "u_pwd")
 	private String password;
 
-	@Column(name ="u_phone")
+	@Column(name = "u_phone")
 	private String phone;
 
-	@Column(name ="u_email")
+	@Column(name = "u_email")
 	private String email;
 
-	@Column(name ="u_head_key")
+	@Column(name = "u_head_key")
 	private String headKey;
 
-
-	@Column(name ="u_create_time")
+	@Column(name = "u_create_time")
 	private Date createTime = Times.now();
 
-	@Column(name ="u_status")
+	@Column(name = "u_status")
 	private Status status = Status.ACTIVED;
 
-	@Column(name ="u_type")
+	@Column(name = "u_type")
 	private Type userType = Type.PLATFORM;
 
-	@Column(name ="u_openid")
+	@Column(name = "u_openid")
 	private String openid;
 
 	public int getId() {
@@ -147,7 +144,6 @@ public class User {
 		this.headKey = headKey;
 	}
 
-
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -179,7 +175,5 @@ public class User {
 	public void setOpenid(String openid) {
 		this.openid = openid;
 	}
-	
-	
 
 }
