@@ -242,7 +242,7 @@ public class APMTask {
 
 	public String hostIp = Ips.hostIp();
 
-	@Scheduled(cron = "*/2 * * * * ? ")
+	@Scheduled(cron = "*/20 * * * * ? ")
 	public void execute() {
 		LOG.debug("sigar...");
 		try {

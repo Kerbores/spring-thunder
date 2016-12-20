@@ -1,4 +1,4 @@
-package club.zhcs.thunder.mapper;
+package club.zhcs.thunder;
 
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;

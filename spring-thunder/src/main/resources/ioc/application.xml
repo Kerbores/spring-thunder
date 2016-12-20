@@ -13,19 +13,19 @@
         http://www.springframework.org/schema/aop 
     	http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <import resource="classpath*:/ioc/db.xml" />
+	<import resource="classpath*:/ioc/db.xml" />
 	<import resource="classpath*:/ioc/shiro.xml" />
 	<import resource="classpath*:/ioc/email.xml" />
 	<import resource="classpath*:/ioc/flowable.xml" />
-	
-	 <mvc:resources location="/assets/" mapping="/assets/**"/>
-	
+
+	<mvc:resources location="/assets/" mapping="/assets/**" />
+
 	<context:component-scan base-package="club.zhcs" />
-	<context:annotation-config/>
- 	<aop:aspectj-autoproxy proxy-target-class="true" />  
+	<context:annotation-config />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
 	<mvc:default-servlet-handler />
 	<mvc:annotation-driven />
-	
+
 	<task:annotation-driven scheduler="myScheduler" />
 	<task:scheduler id="myScheduler" pool-size="20" />
 
@@ -82,6 +82,18 @@
 			</list>
 		</property>
 	</bean>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+
+	<bean class="club.zhcs.thunder.i18n.I18NMessage">
+		<constructor-arg type="java.lang.String" value="classpath*:messages/*.properties" />
+	</bean>
+
+	<mvc:interceptors>
+		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+		</bean>
+	</mvc:interceptors>
 
 
 </beans>

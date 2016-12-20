@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.ReflectUtils;
 
+import club.zhcs.thunder.BaseMapper;
 import club.zhcs.thunder.bean.BaseEntity;
-import club.zhcs.thunder.mapper.BaseMapper;
 
 /**
  * 业务基类，实体业务类只需继承即可拥有基础crud方法
