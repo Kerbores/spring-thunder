@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns="http://www.springframework.org/schema/beans" xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
         http://www.springframework.org/schema/aop 
     	http://www.springframework.org/schema/aop/spring-aop.xsd">
-    	
+
 	<context:component-scan base-package="club.zhcs" />
-	<context:annotation-config/>
- 	<aop:aspectj-autoproxy proxy-target-class="true" />  
+	<context:annotation-config />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
 	<mvc:default-servlet-handler />
 	<mvc:annotation-driven />
-	
+
 	<task:annotation-driven scheduler="myScheduler" />
 	<task:scheduler id="myScheduler" pool-size="20" />
 
@@ -23,15 +25,18 @@
 	<import resource="classpath*:/ioc/shiro.xml" />
 	<import resource="classpath*:/ioc/email.xml" />
 
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
 			<list>
-				<bean class="org.springframework.http.converter.json.GsonHttpMessageConverter" />
+				<bean
+					class="org.springframework.http.converter.json.GsonHttpMessageConverter" />
 			</list>
 		</property>
 	</bean>
 
-	<bean name="beetlConfig" class="org.beetl.ext.spring.BeetlGroupUtilConfiguration" init-method="init">
+	<bean name="beetlConfig" class="org.beetl.ext.spring.BeetlGroupUtilConfiguration"
+		init-method="init">
 		<property name="configFileResource" value="classpath:beetl.properties" />
 	</bean>
 
@@ -53,9 +58,11 @@
 
 
 	<!-- JSP视图解析器 -->
-	<bean name="JSPViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean name="JSPViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 注意JSP的这个视图解析器order必须在最后 -->
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
 		<property name="order" value="256" />
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
@@ -77,5 +84,11 @@
 		</property>
 	</bean>
 
-
+	<bean id="client" class="org.nutz.plugins.nop.client.NOPClient"
+		factory-method="create">
+		<constructor-arg index="0" value="appKey" />
+		<constructor-arg index="1" value="appSecret" />
+		<constructor-arg index="2" value="endpoint" />
+		<constructor-arg index="3" value="digestName" />
+	</bean>
 </beans>
