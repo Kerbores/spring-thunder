@@ -47,5 +47,7 @@
 	</repositories>
 	<modules>
 		<module>thunder-domain</module>
+		<module>thunder-web</module>
+		<module>thundr-ui</module>
 	</modules>
 </project>
