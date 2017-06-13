@@ -50,4 +50,15 @@
 		<module>thunder-web</module>
 		<module>thundr-ui</module>
 	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>org.nutz</groupId>
+			<artifactId>nutz-plugins-spring-boot-starter</artifactId>
+			<version>1.r.62-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+	</dependencies>
 </project>
